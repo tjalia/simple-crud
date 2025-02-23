@@ -1,0 +1,46 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /user-profile
+
+spring:
+  application:
+    name: training
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+    hikari:
+      max-idle-time: 20000
+      idle-timeout: 20000
+    cache-prep-stmts: true
+    prep-stmt-cache-size: 250
+    prep-stmt-cache-sql-limit: 2048
+    connection-test-query: SELECT 1
+  jpa:
+    show-sql: true
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+      use-new-id-generator-mappings: true
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: true
+  flyway:
+    enabled: false
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
+
+headers:
+  client:
+    id: ${APPLICATION_CLIENT_ID}
+    secret: ${APPLICATION_CLIENT_SECRET}
