@@ -1,6 +1,6 @@
 package com.tjalia.userprofile.interceptor;
 
-import com.tjalia.userprofile.exception.ApiException;
+import com.tjalia.userprofile.exception.ClientCredentialiException;
 import com.tjalia.userprofile.property.HeadersProperty;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,21 +19,21 @@ public class ClientCredentialInterceptor implements HandlerInterceptor {
         String headerClientSecret = request.getHeader("x-client-secret");
 
         if (headerClientId == null || headerClientId.isEmpty()){
-            throw new ApiException("Client ID is required.");
+            throw new ClientCredentialiException("Client ID is required.");
         }
 
         if (headerClientSecret == null || headerClientSecret.isEmpty()) {
-            throw new ApiException("Client Secret is required");
+            throw new ClientCredentialiException("Client Secret is required");
         }
 
         HeadersProperty.HeadersClientProperty headersClientProperty = headersProperty.getClient();
 
         if (!headerClientId.equals(headersClientProperty.getId())){
-            throw new ApiException("Incorrect Client ID");
+            throw new ClientCredentialiException("Incorrect Client ID");
         }
 
         if (!headerClientSecret.equals(headersClientProperty.getSecret())) {
-            throw new ApiException("Incorrect Client Secret.");
+            throw new ClientCredentialiException("Incorrect Client Secret.");
         }
 
         return true;
