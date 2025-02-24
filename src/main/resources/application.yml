@@ -19,7 +19,7 @@ spring:
     prep-stmt-cache-sql-limit: 2048
     connection-test-query: SELECT 1
   jpa:
-    show-sql: true
+    show-sql: false
     open-in-view: false
     hibernate:
       ddl-auto: update

@@ -1,5 +1,6 @@
 package com.tjalia.userprofile.controller;
 
+import com.tjalia.userprofile.annotation.RateLimit;
 import com.tjalia.userprofile.dto.request.UserProfileBody;
 import com.tjalia.userprofile.dto.response.UserProfileResponse;
 import com.tjalia.userprofile.service.UserProfileService;
@@ -16,12 +17,14 @@ public class UserProfileController {
 
     private final UserProfileService userProfileService;
 
+    @RateLimit(limit = 10)
     @PostMapping("/v1/user-profile")
     @ResponseStatus(HttpStatus.CREATED)
     public UserProfileResponse createUserProfile(@Valid @RequestBody UserProfileBody userProfileBody){
         return userProfileService.createUserProfile(userProfileBody);
     }
 
+    @RateLimit(limit = 10)
     @GetMapping("/v1/user-profile")
     @ResponseStatus(HttpStatus.OK)
     public Page<UserProfileResponse> getAllUserProfile(
@@ -32,6 +35,7 @@ public class UserProfileController {
         return userProfileService.getAllUserProfile(page, size, sortBy, direction);
     }
 
+    @RateLimit(limit = 10)
     @GetMapping("/v1/user-profile/{id}")
     @ResponseStatus(HttpStatus.OK)
     public UserProfileResponse getUserProfile(
