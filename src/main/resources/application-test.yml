@@ -42,15 +42,5 @@ spring:
 
 headers:
   client:
-    id: ${APPLICATION_CLIENT_ID}
-    secret: ${APPLICATION_CLIENT_SECRET}
-
-logging:
-  level:
-    com.tjalia.userprofile: debug
-  file:
-    path: app/logs
-    name: ${logging.file.path}/${spring.application.name}.log
-    max-history: 30
-  pattern:
-    rolling-file-name: ${logging.file.path}/archived/${spring.application.name}-%d{yyyy-MM-dd}.%i.log
+    id: XCLIENTID
+    secret: XCLIENTSECRET
