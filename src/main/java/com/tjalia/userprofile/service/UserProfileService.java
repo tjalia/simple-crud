@@ -9,4 +9,6 @@ public interface UserProfileService {
     UserProfileResponse createUserProfile(UserProfileBody userProfileBody);
 
     Page<UserProfileResponse> getAllUserProfile(int page, int size, String sortBy, String direction);
+
+    UserProfileResponse getUserProfile(Long id);
 }

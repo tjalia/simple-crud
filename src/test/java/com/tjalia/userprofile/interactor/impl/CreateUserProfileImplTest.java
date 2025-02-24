@@ -91,7 +91,7 @@ class CreateUserProfileImplTest {
         assertEquals(Gender.valueOf(userProfileBody.getGender()), result.getGender());
         assertEquals(Role.valueOf(userProfileBody.getRole()), result.getRole());
 
-        // Verify method calls
+
         verify(userProfileValidator).validateEmail(userProfileBody.getEmailAddress());
         verify(userProfileValidator).validateName(userProfileBody.getName());
         verify(userProfileRepository).save(any(UserProfileEntity.class));

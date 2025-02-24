@@ -32,4 +32,11 @@ public class UserProfileController {
         return userProfileService.getAllUserProfile(page, size, sortBy, direction);
     }
 
+    @GetMapping("/v1/user-profile/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public UserProfileResponse getUserProfile(
+            @PathVariable Long id){
+        return userProfileService.getUserProfile(id);
+    }
+
 }
