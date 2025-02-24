@@ -15,8 +15,11 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Slf4j
 @ControllerAdvice
@@ -39,13 +42,15 @@ public class ApiExceptionHandler {
 
         log.error("API Exception: {} - {}", ex.getMessage(), ex.getDescription(), ex);
 
-        Map<String, Object> errorResponse = new HashMap<>();
-        errorResponse.put("message", ex.getMessage());
-        errorResponse.put("description", ex.getDescription());
-        errorResponse.put("code", ex.getCode());
-        errorResponse.put("heading", ex.getHeading());
-        errorResponse.put("reference", ex.getReference());
-        errorResponse.put("details", ex.getDetails());
+        Map<String, Object> errorResponse = Stream.of(
+                        new AbstractMap.SimpleEntry<>("message", ex.getMessage()),
+                        new AbstractMap.SimpleEntry<>("description", ex.getDescription()),
+                        new AbstractMap.SimpleEntry<>("code", ex.getCode()),
+                        new AbstractMap.SimpleEntry<>("heading", ex.getHeading()),
+                        new AbstractMap.SimpleEntry<>("reference", ex.getReference()),
+                        new AbstractMap.SimpleEntry<>("details", ex.getDetails())
+                ).filter(entry -> entry.getValue() != null)  // Filter out null values
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
         return ResponseEntity.status(ex.getHttpStatus()).body(errorResponse);
     }

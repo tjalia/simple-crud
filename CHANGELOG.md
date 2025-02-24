@@ -10,3 +10,4 @@ Logs with * means that you need to remind someone regarding something.
 - feat: Setup Spring Boot configuration
 - feat: Create User Profile API
 - feat: Get All User Profile API
+- feat: Get User Profile API
