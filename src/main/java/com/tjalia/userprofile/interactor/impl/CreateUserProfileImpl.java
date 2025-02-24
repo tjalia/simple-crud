@@ -46,18 +46,11 @@ public class CreateUserProfileImpl implements CreateUserProfile {
                 .role(Role.valueOf(userProfileBody.getRole()))
                 .build());
 
-        UserProfileResponse response = userProfileMapper.map(userProfileEntity);
-        response.setAge(getAgeAsString(response.getBirthDate()));
 
-        return response;
+        return userProfileMapper.map(userProfileEntity);
     }
 
-    public static String getAgeAsString(LocalDate birthDate) {
-        LocalDate currentDate = LocalDate.now();
-        int age = Period.between(birthDate, currentDate).getYears();
 
-        return String.valueOf(age);
-    }
 
 
 }

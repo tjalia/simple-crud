@@ -3,8 +3,10 @@ package com.tjalia.userprofile.entity;
 import com.tjalia.userprofile.constant.Gender;
 import com.tjalia.userprofile.constant.Role;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDate;
@@ -13,6 +15,8 @@ import java.util.Date;
 @Entity
 @Table(name = "user_profile")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @DynamicUpdate
 @Builder
 public class UserProfileEntity {

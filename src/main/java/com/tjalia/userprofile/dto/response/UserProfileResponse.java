@@ -9,7 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.Date;
+import java.time.Period;
 
 @Data
 @NoArgsConstructor
@@ -23,6 +23,11 @@ public class UserProfileResponse {
     private String emailAddress;
     private Gender gender;
     private LocalDate birthDate;
-    private String age;
+    private String age = getAge();
     private Role role;
+
+    public String getAge() {
+        if (birthDate == null) return null;
+        return String.valueOf(Period.between(birthDate, LocalDate.now()).getYears());
+    }
 }
