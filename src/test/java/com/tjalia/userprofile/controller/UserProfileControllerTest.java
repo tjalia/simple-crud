@@ -12,6 +12,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -45,6 +46,16 @@ class UserProfileControllerTest {
                         .content(requestBody))
                 .andDo(print())
                 .andExpect(status().isCreated());
+    }
+
+    @Test
+    @DisplayName("Get All User Profile should return 200 OK when request is successful")
+    void getAllUserProfile_ShouldReturn200OK_WhenRequestIsSuccessful() throws Exception {
+
+        mockMvc.perform(get("/api/v1/user-profile")
+                        .headers(HeaderUtil.getClientCredentialHeaders()))
+                .andDo(print())
+                .andExpect(status().isOk());
     }
 
 }
