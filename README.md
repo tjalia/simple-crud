@@ -10,9 +10,10 @@ Simple CRUD Operation
 * Spring Aspect
 * H2 Database
 * Lombok
-* Mapstructt
+* Mapstruct
 * Junit5
 * Mockito
+* Docker
 
 ## HTTP Headers
 
