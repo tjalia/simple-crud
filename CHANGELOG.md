@@ -13,3 +13,4 @@ Logs with * means that you need to remind someone regarding something.
 - feat: Get User Profile API
 - feat: API Rate Limiting
 - chore: Update README.md
+- feat: Update User Profile API
