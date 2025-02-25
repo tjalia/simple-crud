@@ -43,4 +43,11 @@ public class UserProfileController {
         return userProfileService.getUserProfile(id);
     }
 
+    @RateLimit(limit = 10)
+    @PutMapping("/v1/user-profile/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public UserProfileResponse updateUserProfile(@PathVariable Long id, @Valid @RequestBody UserProfileBody userProfileBody){
+        return userProfileService.updateUserProfile(id, userProfileBody);
+    }
+
 }
