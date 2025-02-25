@@ -43,12 +43,15 @@ class CreateUserProfileImplTest {
 
     @BeforeEach
     void setUp() {
-        userProfileBody = new UserProfileBody();
-        userProfileBody.setName("Test User");
-        userProfileBody.setEmailAddress("test@example.com");
-        userProfileBody.setGender("MALE");
-        userProfileBody.setBirthDate("1998-04-27");
-        userProfileBody.setRole("ADMIN");
+
+        userProfileBody = UserProfileBody.builder()
+                .name("Test User")
+                .emailAddress("test@example.com")
+                .gender("MALE")
+                .birthDate("1998-04-27")
+                .role("ADMIN")
+                .build();
+
 
         LocalDate birthDate = LocalDate.of(1998, 4, 27);
         when(userProfileValidator.convertToLocalDate(userProfileBody.getBirthDate()))
@@ -62,13 +65,14 @@ class CreateUserProfileImplTest {
                 .role(Role.valueOf(userProfileBody.getRole()))
                 .build();
 
-        userProfileResponse = new UserProfileResponse();
-        userProfileResponse.setId(userProfileEntity.getId());
-        userProfileResponse.setName(userProfileEntity.getName());
-        userProfileResponse.setEmailAddress(userProfileEntity.getEmailAddress());
-        userProfileResponse.setGender(userProfileEntity.getGender());
-        userProfileResponse.setBirthDate(userProfileEntity.getBirthDate());
-        userProfileResponse.setRole(userProfileEntity.getRole());
+        userProfileResponse = UserProfileResponse.builder()
+                .id(userProfileEntity.getId())
+                .name(userProfileEntity.getName())
+                .emailAddress(userProfileEntity.getEmailAddress())
+                .gender(userProfileEntity.getGender())
+                .birthDate(userProfileEntity.getBirthDate())
+                .role(userProfileEntity.getRole())
+                .build();
     }
 
     @Test

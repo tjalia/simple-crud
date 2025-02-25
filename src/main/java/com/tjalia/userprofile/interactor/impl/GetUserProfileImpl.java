@@ -20,7 +20,7 @@ public class GetUserProfileImpl implements GetUserProfile {
     @Override
     public UserProfileResponse execute(Long id) {
         UserProfileEntity entity = userProfileRepository.findById(id)
-                .orElseThrow(() -> new ApiException( HttpStatus.BAD_REQUEST,"User Profile not found."));
+                .orElseThrow(() -> new ApiException(HttpStatus.BAD_REQUEST,"User Profile not found."));
         return userProfileMapper.map(entity);
     }
 }

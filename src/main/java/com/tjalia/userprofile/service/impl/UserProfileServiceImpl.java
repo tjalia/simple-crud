@@ -2,10 +2,8 @@ package com.tjalia.userprofile.service.impl;
 
 import com.tjalia.userprofile.dto.request.UserProfileBody;
 import com.tjalia.userprofile.dto.response.UserProfileResponse;
-import com.tjalia.userprofile.interactor.CreateUserProfile;
-import com.tjalia.userprofile.interactor.GetAllUserProfile;
-import com.tjalia.userprofile.interactor.GetUserProfile;
-import com.tjalia.userprofile.interactor.UpdateUserProfile;
+import com.tjalia.userprofile.dto.response.base.MessageResponse;
+import com.tjalia.userprofile.interactor.*;
 import com.tjalia.userprofile.service.UserProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,6 +17,7 @@ public class UserProfileServiceImpl implements UserProfileService {
     private final GetAllUserProfile getAllUserProfile;
     private final GetUserProfile getUserProfile;
     private final UpdateUserProfile updateUserProfile;
+    private final DeleteUserProfile deleteUserProfile;
 
     @Override
     public UserProfileResponse createUserProfile(UserProfileBody userProfileBody) {
@@ -38,5 +37,10 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Override
     public UserProfileResponse updateUserProfile(Long id, UserProfileBody userProfileBody) {
         return updateUserProfile.execute(id, userProfileBody);
+    }
+
+    @Override
+    public MessageResponse deleteUserProfile(Long id) {
+        return deleteUserProfile.execute(id);
     }
 }
