@@ -5,6 +5,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.tjalia.userprofile.constant.Gender;
 import com.tjalia.userprofile.dto.request.UserProfileBody;
 import com.tjalia.userprofile.dto.response.UserProfileResponse;
+import com.tjalia.userprofile.exception.ApiException;
 import com.tjalia.userprofile.service.UserProfileService;
 import com.tjalia.userprofile.util.HeaderUtil;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,6 +15,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -22,8 +24,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -132,6 +133,39 @@ class UserProfileControllerTest {
                 .andDo(print());
 
         verify(userProfileService).updateUserProfile(eq(userId), any(UserProfileBody.class));
+    }
+
+    @Test
+    @DisplayName("Delete User Profile should return 200 OK when user exists")
+    void deleteUserProfile_ShouldReturn200OK_WhenUserExists() throws Exception {
+
+        // Given
+        Long userId = 1L;
+
+        mockMvc.perform(delete("/api/v1/user-profile/{id}", userId)
+                        .headers(HeaderUtil.getClientCredentialHeaders()))
+                .andExpect(status().isOk());
+
+        verify(userProfileService, times(1)).deleteUserProfile(userId);
+    }
+
+    @Test
+    @DisplayName("Delete User Profile should return 400 BAD_REQUEST when user is not found")
+    void deleteUserProfile_ShouldReturn400BadRequest_WhenUserNotFound() throws Exception {
+        Long userId = 1L;
+
+        // When
+        doThrow(new ApiException(HttpStatus.BAD_REQUEST, "User Profile not found."))
+                .when(userProfileService).deleteUserProfile(userId);
+
+        // Act & Assert
+        mockMvc.perform(delete("/api/v1/user-profile/{id}", userId)
+                        .headers(HeaderUtil.getClientCredentialHeaders()))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("User Profile not found."));
+
+        // Verify method was called
+        verify(userProfileService, times(1)).deleteUserProfile(userId);
     }
 
 }

@@ -10,7 +10,6 @@ import com.tjalia.userprofile.mapper.UserProfileMapper;
 import com.tjalia.userprofile.repository.UserProfileRepository;
 import com.tjalia.userprofile.validator.custom.UserProfileValidator;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -54,15 +53,18 @@ class UpdateUserProfileImplTest {
                 .role(Role.USER)
                 .build();
 
-        userProfileBody = new UserProfileBody();
-        userProfileBody.setName("Updated Name");
-        userProfileBody.setEmailAddress("updated@example.com");
-        userProfileBody.setBirthDate("2000-02-15");
+        userProfileBody = UserProfileBody.builder()
+                .name("Updated Name")
+                .emailAddress("updated@example.com")
+                .birthDate("2000-02-15")
+                .build();
 
-        userProfileResponse = new UserProfileResponse();
-        userProfileResponse.setId(1L);
-        userProfileResponse.setName("Updated Name");
-        userProfileResponse.setEmailAddress("updated@example.com");
+        userProfileResponse = UserProfileResponse.builder()
+                .id(1L)
+                .name("Updated Name")
+                .emailAddress("updated@example.com")
+                .build();
+
     }
 
     @Test

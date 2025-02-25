@@ -3,6 +3,7 @@ package com.tjalia.userprofile.controller;
 import com.tjalia.userprofile.annotation.RateLimit;
 import com.tjalia.userprofile.dto.request.UserProfileBody;
 import com.tjalia.userprofile.dto.response.UserProfileResponse;
+import com.tjalia.userprofile.dto.response.base.MessageResponse;
 import com.tjalia.userprofile.service.UserProfileService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -48,6 +49,13 @@ public class UserProfileController {
     @ResponseStatus(HttpStatus.OK)
     public UserProfileResponse updateUserProfile(@PathVariable Long id, @Valid @RequestBody UserProfileBody userProfileBody){
         return userProfileService.updateUserProfile(id, userProfileBody);
+    }
+
+    @RateLimit(limit = 10)
+    @DeleteMapping("/v1/user-profile/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public MessageResponse deleteUserProfile(@PathVariable Long id){
+        return userProfileService.deleteUserProfile(id);
     }
 
 }
